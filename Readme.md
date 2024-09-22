@@ -16,10 +16,18 @@ Follow these steps to set up and run the project locally.
 - React and Node
 
 ### Frontend Setup Instructions 
-##### Change base url in the index.js file sentiment_frontend directory
+#### Step 1: Change Directory to sentiment_frontend
+```bash
+cd sentiment_frontend
+```
+#### Step 2: Change BASE_URL in index.js in src
+
+#### Step 3: Install all the dependencies 
 ```bash
 npm install
 ```
+
+#### Step 4: Run the React frontend
 ```bash
 npm start
 ```
