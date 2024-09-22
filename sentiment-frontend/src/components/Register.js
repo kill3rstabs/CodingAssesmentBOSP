@@ -1,5 +1,8 @@
-// src/Register.js
 import React, { useState } from 'react';
+import axios from 'axios';
+import '../styles/Register.css';
+
+const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -16,61 +19,59 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:8000/register', {
-        method: 'POST',
+      const response = await axios.post(`${BASE_URL}/register`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      console.log('Registration successful:', data);
+      console.log('Registration successful:', response.data);
+      alert('Registration successful! Redirecting to login...');
+      window.location.href = '/login';
     } catch (error) {
-    console.log('Error during registration:', error);
-      console.error('Error during registration:', error.message);
+      console.log('Error during registration:', error);
+      alert('Registration failed. Please try again.');
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
+    <div className="register-container">
+      <h2 className="register-title">Register</h2>
+      <form onSubmit={handleSubmit} className="register-form">
+        <div className="input-group">
+          <label className="input-label">Username:</label>
           <input
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
             required
+            className="input-field"
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className="input-group">
+          <label className="input-label" style={{ paddingRight: '35px' }}>Email:</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
+            className="input-field"
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="input-group">
+          <label className="input-label" style={{ paddingRight: '5px' }}>Password:</label>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
+            className="input-field"
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className="register-button">Register</button>
       </form>
     </div>
   );

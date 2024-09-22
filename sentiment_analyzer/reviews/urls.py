@@ -1,5 +1,3 @@
-# reviews/urls.py
-
 from django.urls import path
 from .views import submit_review, get_reviews
 

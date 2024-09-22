@@ -1,23 +1,29 @@
-// src/App.js
-import React, { useState } from 'react';
-import Register from './components/Register';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
+import Register from './components/Register';
+import Reviews from './components/Review';  // Import your Reviews component
 
 const App = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
-  const toggleForm = () => {
-    setIsLogin(!isLogin);
-  };
-
   return (
-    <div>
-      <h1>{isLogin ? 'Welcome to the Login Page' : 'Welcome to the Registration Page'}</h1>
-      {isLogin ? <Login /> : <Register />}
-      <button onClick={toggleForm}>
-        {isLogin ? 'Switch to Register' : 'Switch to Login'}
-      </button>
-    </div>
+    <Router>
+      <div>
+        {/* Use Routes instead of Switch */}
+        <Routes>
+          {/* Define route for login */}
+          <Route path="/login" element={<Login />} />
+
+          {/* Define route for registration */}
+          <Route path="/register" element={<Register />} />
+
+          {/* Define route for reviews */}
+          <Route path="/reviews" element={<Reviews />} />
+
+          {/* Default route, navigate to login */}
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

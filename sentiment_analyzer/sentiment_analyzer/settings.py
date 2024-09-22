@@ -32,7 +32,12 @@ ALLOWED_HOSTS = [
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 # Application definition
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        # Other authentication classes if needed
+    ],
+}
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,12 +61,24 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.common.CommonMiddleware",
 ]
+## allowed originscors 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = [ '*' ]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React app URL
+    'http://localhost:3000',
+    'https://3000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io'
+]
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+    # Add other methods as needed
 ]
 ROOT_URLCONF = 'sentiment_analyzer.urls'
-
+CORS_ALLOW_CREDENTIALS = True 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

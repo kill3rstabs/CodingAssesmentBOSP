@@ -5,17 +5,26 @@ from .serializers import CustomUserSerializer  # Import the serializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from .models import CustomUser
+
 @api_view(['POST'])
 def register(request):
     print("Request data:", request.data)
     if request.method == 'POST':
         serializer = CustomUserSerializer(data=request.data)
-        email = request.data.get('email')  # Get email from the request data
+        email = request.data.get('email')
+        username = request.data.get('username')
+
+        # Check if email or username is already taken
         if CustomUser.objects.filter(email=email).exists():
             return Response({"error": "This email is already registered."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if CustomUser.objects.filter(username=username).exists():
+            return Response({"error": "This username is already taken."}, status=status.HTTP_400_BAD_REQUEST)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
