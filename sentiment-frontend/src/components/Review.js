@@ -56,17 +56,25 @@ export default function Reviews() {
     } catch (error) {
       console.error('Error submitting review:', error);
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        alert('You must be logged in to submit a review.');
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000); 
       } else {
         alert('Failed to submit review. Please try again.');
       }
     }
   }
 
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // Clear the token
+    navigate('/login'); // Redirect to login page
+  };
   return (
     <div className="container">
       <h1 className="title">Your Movie Reviews</h1>
-      
+      <button onClick={handleLogout}>Logout</button> {/* Logout Button */}
       <div className="form-container">
         <h2 className="form-title">Submit a New Review</h2>
         <form onSubmit={handleSubmit} className="review-form">

@@ -37,7 +37,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    padding-left: 110px;
+    width: 70%;
     margin-left: 12px;
     transition: border-color 0.3s;
   }
