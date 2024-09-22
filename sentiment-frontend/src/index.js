@@ -10,7 +10,9 @@ root.render(
     <App />
   </React.StrictMode>
 );
+const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
 
+export { BASE_URL };
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Register.css';
-
-const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
+import { BASE_URL } from '../index';
+// const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
 
 const Register = () => {
   const [formData, setFormData] = useState({

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/Review.css'; // Import the CSS file
-
-const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
+import '../styles/Review.css';
+import { BASE_URL } from '../index';
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
@@ -11,19 +10,21 @@ export default function Reviews() {
     movie_title: '',
     content: '',
   });
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const token = localStorage.getItem('authToken');
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/reviews`, {
+        const response = await axios.get(`${BASE_URL}/reviews?page=${currentPage}`, {
           headers: {
             'Authorization': `Token ${token}`,
           },
         });
-        setReviews(response.data);
+        setReviews(response.data.results);
+        setTotalPages(Math.ceil(response.data.count / 5)); // Update this line
       } catch (error) {
         console.log('Error fetching reviews:', error);
         if (error.response && error.response.status === 401) {
@@ -33,7 +34,7 @@ export default function Reviews() {
     };
 
     fetchReviews();
-  }, [token, navigate]);
+  }, [token, navigate, currentPage]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,22 +60,28 @@ export default function Reviews() {
         alert('You must be logged in to submit a review.');
         setTimeout(() => {
           navigate('/login');
-        }, 1000); 
+        }, 1000);
       } else {
         alert('Failed to submit review. Please try again.');
       }
     }
-  }
-
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken'); // Clear the token
-    navigate('/login'); // Redirect to login page
+    localStorage.removeItem('authToken');
+    navigate('/login');
   };
+
+
+  const handleStatistics = () => {
+    navigate('/statistics'); // Navigate to statistics page
+  };
+  
   return (
     <div className="container">
       <h1 className="title">Your Movie Reviews</h1>
-      <button onClick={handleLogout}>Logout</button> {/* Logout Button */}
+      <button onClick={handleLogout}>Logout</button>
+      <button onClick={handleStatistics} style={{ marginLeft: '10px' }}>View Statistics</button>
       <div className="form-container">
         <h2 className="form-title">Submit a New Review</h2>
         <form onSubmit={handleSubmit} className="review-form">
@@ -132,6 +139,23 @@ export default function Reviews() {
           </table>
         </div>
       )}
+
+      {/* Pagination Controls */}
+      <div className="pagination">
+        <button 
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <button 
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

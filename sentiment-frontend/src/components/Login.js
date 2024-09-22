@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Login.css'; // Adjust the path based on your folder structure
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { BASE_URL } from '../index';
 
-const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
+// const BASE_URL = 'https://8000-kill3rstabs-codingasses-w0ipfvg60f1.ws-us116.gitpod.io';
 
 const Login = () => {
   const [formData, setFormData] = useState({
