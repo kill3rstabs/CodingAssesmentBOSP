@@ -13,8 +13,18 @@ Follow these steps to set up and run the project locally.
 - Python 3.x
 - pip (Python package installer)
 - Virtual environment (optional but recommended)
+- React and Node
 
-### Setup Instructions
+### Frontend Setup Instructions 
+
+```bash
+npm install
+```
+```bash
+npm start
+```
+
+### Backend Setup Instructions
 
 #### Step 1: Create a Virtual Environment
 
